@@ -1,23 +1,27 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
-// Generic class to hold three variables of a generic type
+// Generic class to hold a variable number of elements of a generic type
 class GenericMax<T extends Comparable<T>> {
-    private T a, b, c;
-    public GenericMax(T a, T b, T c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    private T[] elements;
+
+    public GenericMax(T... elements) {
+        this.elements = elements;
     }
 
-    public T testMaximum() {
-        return testMaximum(a, b, c);
+    public T findMaximum() {
+        return findMaximum(elements);
     }
 
-    public static <T extends Comparable<T>> T testMaximum(T a, T b, T c) {
-        T max = a;
-        if (b.compareTo(max) > 0) max = b;
-        if (c.compareTo(max) > 0) max = c;
-        return max;
+
+    public T findMaximum(T... elements) {
+            T max = elements[0];
+            for (T value : elements) {
+                if (value.compareTo(max) > 0) {
+                    max = value;
+                }
+            }
+            return max;
     }
 }
 
@@ -26,23 +30,49 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // Strings
-        System.out.print("Enter 3 strings: ");
-        String s1 = sc.next(), s2 = sc.next(), s3 = sc.next();
-        GenericMax<String> stringMax = new GenericMax<>(s1, s2, s3);
-        System.out.println("Max String: " + stringMax.testMaximum());
+        // we dont need try catch  for strings because empty string is also consider as element in this case
+        System.out.println("Enter strings separated by space ");
+        try{
+        String line = sc.nextLine();
+        String[] strings = line.split(" ");
+        GenericMax<String> stringMax = new GenericMax<>(strings);
+        System.out.println("Max String: " + stringMax.findMaximum());
+        }
+        catch (Exception e){
+            System.out.println("Enter Some Strings");
+        }
 
         // Integers
-        System.out.print("Enter 3 integers: ");
-        Integer n1 = sc.nextInt(), n2 = sc.nextInt(), n3 = sc.nextInt();
-        GenericMax<Integer> intMax = new GenericMax<>(n1, n2, n3);
-        System.out.println("Max Integer: " + intMax.testMaximum());
+        System.out.println("\nEnter integers separated by space:");
+        try {
+            String line = sc.nextLine();
+            String[] intStrings = line.split(" ");
+            Integer[] integers = new Integer[intStrings.length];
+            for (int i = 0; i < intStrings.length; i++) {
+                integers[i] = Integer.parseInt(intStrings[i]);
+            }
+            GenericMax<Integer> intMax = new GenericMax<>(integers);
+            System.out.println("Max Integer: " + intMax.findMaximum());
+        }
+        catch (Exception e){
+            System.out.println("Error handling Please Enter Some Integers");
+        }
 
         // Floats
-        System.out.print("Enter 3 floats: ");
-        Float f1 = sc.nextFloat(), f2 = sc.nextFloat(), f3 = sc.nextFloat();
-        GenericMax<Float> floatMax = new GenericMax<>(f1, f2, f3);
-        System.out.println("Max Float: " + floatMax.testMaximum());
-
+        System.out.println("\nEnter floats separated by space:");
+        try {
+            String line = sc.nextLine();
+            String[] floatStrings = line.split(" ");
+            Float[] floats = new Float[floatStrings.length];
+            for (int i = 0; i < floatStrings.length; i++) {
+                floats[i] = Float.parseFloat(floatStrings[i]);
+            }
+            GenericMax<Float> floatMax = new GenericMax<>(floats);
+            System.out.println("Max Float: " + floatMax.findMaximum());
+        }
+        catch (Exception e){
+            System.out.println("Error Handling Please Enter Float Numbers");
+        }
         sc.close();
     }
 }
