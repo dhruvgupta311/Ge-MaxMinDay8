@@ -21,7 +21,11 @@ class GenericMax<T extends Comparable<T>> {
                     max = value;
                 }
             }
+        printMax(max);
             return max;
+    }
+    public void printMax(T max) {
+        System.out.println("Max Value From Print Function: " + max);
     }
 }
 
